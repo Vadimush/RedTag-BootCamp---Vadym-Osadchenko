@@ -149,7 +149,7 @@ export default class BookList extends LightningElement {
             }
             
             try {
-                await deleteBook({ bookId: row.Id });
+                await deleteBooks({ bookIds: [row.Id] });
                 this.showToast('Success', `Book "${row.Name}" deleted.`, 'success');
                 return refreshApex(this.wiredBooksResult); 
 

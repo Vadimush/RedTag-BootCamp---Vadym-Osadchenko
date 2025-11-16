@@ -110,19 +110,42 @@ The `loginShell` component must be placed on the app's home page.
 ## How to Use (Testing Steps)
 
 1.  From the **App Launcher**, open the **`Library_Manager`** app.
-2.  You will see the custom login/register component.
-3.  **Register:**
-    * Click the **Register** tab.
-    * Enter a `Display Name`, `Username`, and `Password` (e.g., `testuser` / `testpass123`).
-    * Click "Register". This will create the `User_Credentials__c` record.
-4.  **Login:**
-    * Click the **Login** tab.
-    * Enter the `Username` and `Password` you just created.
-    * Click "Login".
-5.  **Result:**
-    * The login component will disappear and be replaced by the `libraryManager` component, which displays the `bookList` datatable.
+2.  You will be greeted by the custom login/register component.
 
-*Note: If the book list is empty, you may need to manually create a few `Author__c` and `Book__c` records via 'Add Book' and 'Add Author' buttons
+### 1. Register and Login
+* Click the **Sign up** tab.
+* Enter a `Display Name` (optional), `Username`, and `Password`. 
+    * *Note: Per the logic in `loginShell.js`, the password must be at least 12 characters and include an uppercase letter, a lowercase letter, and a number (e.g., `Testpass123!`).*
+* Click **Create account**. This will create the `User_Credentials__c` record and automatically log you in.
+
+### 2. Create an Author
+* Once logged in, you'll see the main `libraryManager` component.
+* Click the **Add Author** button.
+* A modal will appear. Enter a **Name** (e.g., "George Orwell"). You can also add pseudonyms or a date of birth.
+* Click **Save Authors**. A success toast will appear.
+
+### 3. Create a Book
+* Click the **Add Book** button.
+* In the modal, enter a **Name** (e.g., "1984").
+* Use the **Author** search to select the author you just created ("George Orwell"). This field is required.
+* Select a **Genre** from the dropdown.
+* Click **Save Books**.
+* The new book will now appear in the **Book List** datatable below.
+
+### 4. Manage Books (Edit/Delete)
+* **Edit:** In the book list, find your book, click the small arrow on the far right of its row, and select **Edit**. A modal will open allowing you to update its details.
+* **Delete (Single):** In the same row menu, select **Delete**. You will be asked to confirm.
+* **Delete (Multiple):** Use the checkboxes on the left to select one or more books, then click the **Delete Selected** button.
+
+### 5. Export Data
+* Click the **Export Books** button.
+* This will immediately download a `book-list.csv` file with all the books currently displayed in the list (respecting any filters you may have applied).
+
+### 6. Delete an Author (Cascade Delete)
+* Click the **Delete Author** button.
+* Use the search to select the author you created ("George Orwell").
+* Click the **Delete Author and Books** button.
+* This will delete the `Author__c` record *and* all associated `Book__c` records ("1984"), demonstrating the custom cascade delete logic from `LibraryController.cls`.
 
 ---
 
